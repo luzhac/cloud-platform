@@ -52,4 +52,4 @@ spec:
   ports:
     - port: 8765
       targetPort: 8765
-  type: ClusterIp
+  type: ClusterIP
