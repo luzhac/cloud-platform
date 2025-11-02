@@ -1,17 +1,16 @@
 apiVersion: v2
-name: myapp
-description: A Helm chart to deploy service-a, service-b, and monitoring resources
+name: trading
+description: A Helm chart to deploy trading microservices (signal, data, redis) on EKS
 type: application
-version: 0.1.0
+version: 1.0.0
 appVersion: "1.0.0"
-maintainers:
-  - name: luzha
-    email: your-email@example.com
+
+
 keywords:
   - kubernetes
   - helm
+  - trading
   - microservices
-  - service-a
-  - service-b
-sources:
-  - https://github.com/your-repo-link   # 如果你有 GitHub repo，可以加上
+  - aws
+  - eks
+

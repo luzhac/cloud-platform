@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ssm_role" {
-  name = "${var.cluster_name}-ssm-role"
+  name = "${var.cluster_name}-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -16,7 +16,13 @@ resource "aws_iam_role_policy_attachment" "ssm_attach" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+resource "aws_iam_role_policy_attachment" "ecr_readonly_attach" {
+  role       = aws_iam_role.ssm_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
+
 resource "aws_iam_instance_profile" "profile" {
   name = "${var.cluster_name}-ssm-profile"
   role = aws_iam_role.ssm_role.name
 }
+

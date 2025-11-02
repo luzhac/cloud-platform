@@ -8,7 +8,7 @@ spec:
   - name: app.rules
     rules:
     - alert: HighCpuUsagePods
-      # 以 Pod 为维度：实际 CPU 使用率 / 该 Pod 的 CPU request
+
       expr: |
         sum by (namespace,pod) (
           rate(container_cpu_usage_seconds_total{container!="",image!=""}[5m])
