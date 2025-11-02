@@ -28,7 +28,11 @@ resource "aws_instance" "master" {
   iam_instance_profile        = var.iam_instance_profile
   key_name                    = var.key_name
 
+  root_block_device {
+    volume_size           = 20
 
+    delete_on_termination = true
+  }
 
   tags = {
     Name = "${var.cluster_name}-master"
@@ -47,6 +51,12 @@ resource "aws_instance" "app" {
   key_name                    = var.key_name
   depends_on                  = [aws_instance.master]
 
+  root_block_device {
+    volume_size           = 20
+
+    delete_on_termination = true
+  }
+
   tags = {
     Name = "${var.cluster_name}-app"
     Role = "app"
@@ -63,6 +73,12 @@ resource "aws_instance" "monitor" {
   iam_instance_profile        = var.iam_instance_profile
   key_name                    = var.key_name
   depends_on                  = [aws_instance.master]
+
+    root_block_device {
+    volume_size           = 30
+
+    delete_on_termination = true
+  }
 
   tags = {
     Name = "${var.cluster_name}-monitor"

@@ -16,9 +16,9 @@ helm upgrade trading ./infra/kubernetes/helm/trading -n trading
 
 ```
 aws ecr get-login-password --region ap-northeast-1 \
-| sudo ctr --address /var/run/containerd/containerd.sock --namespace k8s.io images pull \
+| sudo ctr --namespace k8s.io images pull \
 --user AWS:$(aws ecr get-login-password --region ap-northeast-1) \
---platform linux/amd64 \
+--platform linux/arm64 \
 173381466759.dkr.ecr.ap-northeast-1.amazonaws.com/quant:latest
 
 

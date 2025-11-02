@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-a
+  name: fetch-data
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: service-a
+      app: fetch-data
   template:
     metadata:
       labels:
-        app: service-a
+        app: fetch-data
     spec:
       containers:
-        - name: service-a
+        - name: fetch-data
           image: 173381466759.dkr.ecr.ap-northeast-1.amazonaws.com/quant:latest
           imagePullPolicy: IfNotPresent
           command: ["python", "-u", "-m", "ws.ws_binance_kline_future"]

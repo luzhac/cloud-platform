@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-b
+  name: generate-signal
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: service-b
+      app: generate-signal
   template:
     metadata:
       labels:
-        app: service-b
+        app: generate-signal
     spec:
 
       containers:
-        - name: service-b
+        - name: generate-signal
           image: 173381466759.dkr.ecr.ap-northeast-1.amazonaws.com/quant:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           command: [ "python", "-u", "-m", "trade_binance.q_get_symbol_future_p" ]
           ports:
 
