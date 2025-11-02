@@ -16,7 +16,7 @@ mountOptions:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.efs.claimName  }}
+  name: efs-claim
   namespace: {{ .Release.Namespace }}
 spec:
   accessModes:
