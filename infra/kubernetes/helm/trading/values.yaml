@@ -1,0 +1,16 @@
+# values.yaml
+redis:
+  enabled: true
+  replicaCount: 1
+  image: redis:7.2
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+redisService:
+  port: 6379
+  type: ClusterIP
