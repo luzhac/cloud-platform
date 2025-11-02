@@ -21,6 +21,11 @@ resource "aws_iam_role_policy_attachment" "ecr_readonly_attach" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }
 
+resource "aws_iam_role_policy_attachment" "efs_csi_driver_attach" {
+  role       = aws_iam_role.ssm_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEFSCSIDriverPolicy"
+}
+
 resource "aws_iam_instance_profile" "profile" {
   name = "${var.cluster_name}-ssm-profile"
   role = aws_iam_role.ssm_role.name
