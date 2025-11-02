@@ -41,3 +41,15 @@ spec:
         - name: efs-storage
           persistentVolumeClaim:
             claimName: efs-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-a
+spec:
+  selector:
+    app: fetch-data
+  ports:
+    - port: 8765
+      targetPort: 8765
+  type: ClusterIp
