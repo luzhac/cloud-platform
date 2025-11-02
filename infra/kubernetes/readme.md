@@ -11,3 +11,18 @@ kubectl delete ns trading
 helm upgrade trading ./infra/kubernetes/helm/trading -n trading
 
 
+
+## config  ecr login
+
+```
+aws ecr get-login-password --region ap-northeast-1 \
+| sudo ctr --address /var/run/containerd/containerd.sock --namespace k8s.io images pull \
+--user AWS:$(aws ecr get-login-password --region ap-northeast-1) \
+--platform linux/amd64 \
+173381466759.dkr.ecr.ap-northeast-1.amazonaws.com/quant:latest
+
+
+
+
+```
+ 

@@ -23,7 +23,7 @@ resource "aws_iam_role_policy_attachment" "ecr_readonly_attach" {
 
 resource "aws_iam_role_policy_attachment" "efs_csi_driver_attach" {
   role       = aws_iam_role.ssm_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEFSCSIDriverPolicy"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
 }
 
 resource "aws_iam_instance_profile" "profile" {
