@@ -22,6 +22,12 @@ Thumbs.db
 .idea/
 *.code-workspace
 
+.secrets/
+.terraform/
+terraform.tfstate*
+.terraform*
+
+
 # Python (for CDK or helper scripts)
 __pycache__/
 *.py[cod]
