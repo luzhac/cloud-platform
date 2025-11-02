@@ -1,0 +1,79 @@
+name: CD - Build & Push ARM64 Image to ECR
+
+on:
+  workflow_run:
+    workflows: ["CI - Test, Lint, and Scan"]   # CI
+    types:
+      - completed
+
+jobs:
+  build-and-push-arm64:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam:::role/github_access_ecr
+          aws-region: ap-northeast-1
+
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          install: true
+          driver-opts: image=moby/buildkit:buildx-stable-1
+
+
+      - name: Build and push ARM64 image to ECR
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+
+          tags: |
+            ${{ steps.login-ecr.outputs.registry }}/quant:latest
+            ${{ steps.login-ecr.outputs.registry }}/quant:${{ github.sha }}
+
+
+      - name: Verify image architecture
+        run: |
+          echo "🔍 Checking image architecture in ECR..."
+          IMAGE=${{ steps.login-ecr.outputs.registry }}/quant:latest
+
+          echo "Pulling manifest..."
+          docker buildx imagetools inspect $IMAGE > manifest.txt || true
+          echo "=== Image Manifest ==="
+          cat manifest.txt
+
+          echo ""
+          echo "🔎 Extracting platform info..."
+          ARCH=$(grep -i "linux/arm64" manifest.txt || true)
+          if [ -n "$ARCH" ]; then
+            echo "Verified: ARM64 platform found in manifest"
+          else
+            echo "ARM64 not found in manifest, please check build logs"
+            exit 1
+          fi
