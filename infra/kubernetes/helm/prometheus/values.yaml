@@ -1,0 +1,23 @@
+alertmanager:
+  enabled: true
+
+pushgateway:
+  enabled: false
+
+server:
+  persistentVolume:
+    enabled: false
+  service:
+    type: NodePort
+    nodePort: 30900
+  global:
+    scrape_interval: 15s
+
+nodeExporter:
+  enabled: true
+
+kubeStateMetrics:
+  enabled: true
+
+nodeSelector:
+  role: monitor

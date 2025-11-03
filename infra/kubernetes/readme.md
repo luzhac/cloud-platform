@@ -3,12 +3,26 @@
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
 
+kubectl create ns trading
+kubectl create ns monitoring
+
+
+
+cd infra/kubernetes/helm/platform
+helm dependency update
+helm install monitoring . -n monitoring \
+  -f values-monitoring.yaml
+
+
+
+
 helm install trading ./infra/kubernetes/helm/trading --namespace trading --create-namespace
 helm uninstall trading -n trading
 kubectl delete ns trading
 
-
 helm upgrade trading ./infra/kubernetes/helm/trading -n trading
+
+
 
 kubectl exec -it -n trading generate-signal-8459977486-6t72j  -- bash
 cd /mnt/efs

@@ -1,13 +1,13 @@
-
-global:
-  namespace: trading
-
 trading:
-  replicaCount: 1
-  resources:
-    limits:
-      cpu: 500m
-      memory: 512Mi
+  enabled: false
+
+prometheus:
+  server:
+    service:
+      type: NodePort
+      nodePort: 30900
+    nodeSelector:
+      role: monitor
 
 grafana:
   service:
@@ -25,8 +25,6 @@ loki:
     enabled: false
   loki:
     auth_enabled: false
-    commonConfig:
-      replication_factor: 1
     storage:
       type: filesystem
   nodeSelector:
@@ -34,4 +32,4 @@ loki:
 
 promtail:
   config:
-    lokiAddress: http://loki.trading.svc.cluster.local:3100/loki/api/v1/push
+    lokiAddress: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
