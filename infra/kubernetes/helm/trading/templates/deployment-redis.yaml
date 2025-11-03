@@ -1,4 +1,4 @@
-{{- if .Values.redis.enabled }}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,4 +34,4 @@ spec:
     - port: {{ .Values.redis.service.port }}
       targetPort: 6379
   type: {{ .Values.redis.service.type }}
-{{- end }}
+
