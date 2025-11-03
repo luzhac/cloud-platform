@@ -10,9 +10,9 @@ kubectl create ns monitoring
 
 cd infra/kubernetes/helm/platform
 helm dependency update
-helm install monitoring . -n monitoring \
-  -f values-monitoring.yaml
+helm install monitoring . -n monitoring -f values-monitoring.yaml
 
+helm upgrade monitoring . -n monitoring -f values-monitoring.yaml
 
 
 

@@ -1,6 +1,7 @@
 
 
 prometheus:
+  enabled: false
   server:
     service:
       type: NodePort
@@ -9,6 +10,7 @@ prometheus:
       role: monitor
 
 grafana:
+  enabled: false
   service:
     type: NodePort
     nodePort: 30300
@@ -18,6 +20,7 @@ grafana:
     role: monitor
 
 loki:
+  enabled: false
   grafana:
     enabled: false
   prometheus:
@@ -30,5 +33,6 @@ loki:
     role: monitor
 
 promtail:
+  enabled: false
   config:
     lokiAddress: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
