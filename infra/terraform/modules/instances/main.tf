@@ -43,7 +43,7 @@ resource "aws_instance" "master" {
 # App node
 resource "aws_instance" "app" {
   ami                         = local.ami_id
-  instance_type               = "t4g.small"
+  instance_type               = "t4g.medium"
   subnet_id                   = var.subnet_public_id
   associate_public_ip_address = true
   vpc_security_group_ids      = [var.security_group_id]
