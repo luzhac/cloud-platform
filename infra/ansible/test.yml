@@ -1,0 +1,12 @@
+---
+- name: Test connection to EC2
+  hosts: aws
+  gather_facts: no
+  tasks:
+    - name: Check system info
+      command: uname -a
+      register: result
+
+    - name: Print output
+      debug:
+        var: result.stdout
