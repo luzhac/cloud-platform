@@ -1,0 +1,12 @@
+- name: Install my trading script on EC2
+  hosts: ec2
+  become: true
+  tasks:
+    - name: Copy script to remote server
+      copy:
+        src: ./worker_bootstrap.sh
+        dest: /tmp/worker_bootstrap.sh
+        mode: '0755'
+
+    - name: Run the installation script
+      command: bash /tmp/worker_bootstrap.sh
