@@ -16,20 +16,6 @@ stringData:
   POSTGRES_USER: mlflow
   POSTGRES_PASSWORD: mlflowpass
 
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-  namespace: mlflow
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: ebs-gp3
-  resources:
-    requests:
-      storage: 10Gi
 
 ---
 apiVersion: apps/v1
@@ -56,6 +42,9 @@ spec:
           envFrom:
             - secretRef:
                 name: postgres-secret
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
             - name: postgres-storage
               mountPath: /var/lib/postgresql/data
