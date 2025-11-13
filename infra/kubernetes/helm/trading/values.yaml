@@ -50,7 +50,7 @@ redis:
 efs:
   enabled: true
   reclaimPolicy: Delete
-  fileSystemId: fs-0afc15b34a304be28
+  fileSystemId: fs-05aa06c00158d0795
   path: /
   storageClass: efs-sc
   accessModes:

@@ -1,25 +1,24 @@
 export KUBECONFIG=/etc/kubernetes/admin.conf
 
-
 kubectl create ns trading
 kubectl create ns monitoring
 
-
-
-cd infra/kubernetes/helm/platform
+# 1
+cd infra/kubernetes/helm
 helm dependency update
 helm install monitoring . -n monitoring -f values-monitoring.yaml
-
 helm upgrade monitoring . -n monitoring -f values-monitoring.yaml
 
 
-
+# 2
 helm install trading ./infra/kubernetes/helm/trading --namespace trading --create-namespace
 helm uninstall trading -n trading
+
 kubectl delete ns trading
 
 helm upgrade trading ./infra/kubernetes/helm/trading -n trading
 
+# 3
 kubectl apply -f ./infra/kubernetes/helm/trading/templates/deployment-fetch-data.yaml  -n trading
 
 helm upgrade trading . -n trading
@@ -42,13 +41,11 @@ aws ecr get-login-password --region ap-northeast-1 \
 
 ```
 
-# ebs 
+# 3 ebs 
 helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
 helm repo update 
 helm upgrade --install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
   --namespace kube-system \
 
-
-
-# efs
+# 4 efs
  
