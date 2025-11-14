@@ -122,7 +122,7 @@ spec:
 
           args:
             - apt-get update && apt-get install -y procps gcc g++ libpq-dev build-essential && \
-              /usr/local/bin/pip install mlflow boto3 psycopg2-binary && \
+              pip3 install mlflow boto3 psycopg2-binary && \
               sleep 600 && \
               mlflow server \
               --backend-store-uri $(BACKEND_STORE_URI) \
