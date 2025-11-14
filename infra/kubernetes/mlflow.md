@@ -4,7 +4,7 @@
 
  kubectl exec -it mlflow-574c7995ff-vbn8x  -c mlflow   -n mlflow -- bash
  
-kubectl logs mlflow-574c7995ff-vbn8x    -n mlflow 
+kubectl logs mlflow-6cc76b7c59-wgn8b     -n mlflow 
 
 
 [notice] A new release of pip is available: 23.0.1 -> 25.3
