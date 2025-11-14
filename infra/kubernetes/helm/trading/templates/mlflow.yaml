@@ -118,6 +118,13 @@ spec:
             - configMapRef:
                 name: mlflow-config
           command: [ "bash", "-c" ]
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "768Mi"
+              cpu: "500m"
           args:
             - |
               pip install --no-cache-dir mlflow boto3 psycopg2-binary && \
