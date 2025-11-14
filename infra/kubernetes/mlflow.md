@@ -1,10 +1,15 @@
 
- 
 
 
- kubectl exec -it mlflow-676569f684-7xfkh    -c mlflow   -n mlflow -- bash
+
+kubectl run python-test --image=python:3.10-slim --restart=Never -it -- bash
+
+
+
+
+ kubectl exec -it mlflow-9d84bfd97-f5p4h    -c mlflow   -n mlflow -- bash
  
-kubectl logs mlflow-676569f684-7xfkh       -n mlflow 
+kubectl logs mlflow-9d84bfd97-f5p4h        -n mlflow  -f
 
 
 [notice] A new release of pip is available: 23.0.1 -> 25.3
