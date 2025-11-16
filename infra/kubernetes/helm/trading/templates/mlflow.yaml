@@ -112,11 +112,19 @@ spec:
       containers:
         - name: mlflow
           image: python:3.9-slim
+          volumeMounts:
+            - name: mlflow-token
+              mountPath: /etc/mlflow
+
+
+
           envFrom:
             - secretRef:
                 name: mlflow-secret
             - configMapRef:
                 name: mlflow-config
+
+
           command: [ "bash", "-c" ]
           resources:
             requests:
@@ -133,10 +141,16 @@ spec:
                 --default-artifact-root "$ARTIFACT_ROOT" \
                 --host 0.0.0.0 \
                 --port 5000 \
+                --app-name basic-auth \
+        
                 --gunicorn-opts "--timeout 120 --workers 1 --threads 4"
 
 
 
+      volumes:
+        - name: mlflow-token
+          secret:
+            secretName: mlflow-token
 ---
 apiVersion: v1
 kind: Service
