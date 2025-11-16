@@ -177,10 +177,7 @@ metadata:
 
 spec:
   ingressClassName: nginx
-  tls:
-  - hosts:
-    - mlflow.marscompute.com
-    secretName: mlflow-tls
+
   rules:
   - host: mlflow.marscompute.com
     http:

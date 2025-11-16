@@ -70,3 +70,42 @@ resource "aws_security_group_rule" "allow_nfs_from_nodes" {
   source_security_group_id = aws_security_group.sg.id
   description              = "Allow NFS from node security group"
 }
+
+resource "aws_security_group" "alb_sg" {
+  name        = "alb-sg"
+  description = "Allow inbound HTTP/HTTPS"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description = "Allow HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow HTTPS"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group_rule" "allow_alb_to_nodeport" {
+  type              = "ingress"
+  description       = "Allow ALB to access NodePort"
+  from_port         = 30000
+  to_port           = 32767
+  protocol          = "tcp"
+  security_group_id = aws_security_group.sg.id
+  source_security_group_id = aws_security_group.alb_sg.id
+}

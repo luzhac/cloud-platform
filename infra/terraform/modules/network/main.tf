@@ -18,6 +18,17 @@ resource "aws_subnet" "public_a" {
   tags                    = { Name = "${var.cluster_name}-public-a" }
 }
 
+resource "aws_subnet" "public_b" {
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "${var.region}c"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "${var.cluster_name}-public-b"
+  }
+}
+
+
 resource "aws_subnet" "private_a" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = "10.0.11.0/24"
@@ -41,6 +52,12 @@ resource "aws_route_table_association" "assoc_pub" {
   subnet_id      = aws_subnet.public_a.id
   route_table_id = aws_route_table.public.id
 }
+
+resource "aws_route_table_association" "assoc_pub_b" {
+  subnet_id      = aws_subnet.public_b.id
+  route_table_id = aws_route_table.public.id
+}
+
 
 resource "aws_route_table_association" "assoc_priv" {
   subnet_id      = aws_subnet.private_a.id
