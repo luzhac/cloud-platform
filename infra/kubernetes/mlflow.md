@@ -22,6 +22,11 @@ kubectl create secret generic mlflow-basic-auth --from-file=auth
 kubectl delete certificate mlflow-tls
 
 
+
+
+
+
+
 kubectl run python-test --image=python:3.10-slim --restart=Never -it -- bash
 
  
