@@ -113,12 +113,7 @@ spec:
         - name: mlflow
           image: python:3.9-slim
 
-          env:
-            - name: MLFLOW_FLASK_SERVER_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: mlflow-secret
-                  key: flask-secret-key
+
 
           envFrom:
             - secretRef:
@@ -137,13 +132,13 @@ spec:
               cpu: "500m"
           args:
             - |
-              pip install --no-cache-dir "mlflow[auth]==3.1.1" boto3 psycopg2-binary && \
+              pip install --no-cache-dir mlflow==3.1.1 boto3 psycopg2-binary && \
               python -m mlflow server \
                 --backend-store-uri "$BACKEND_STORE_URI" \
                 --default-artifact-root "$ARTIFACT_ROOT" \
                 --host 0.0.0.0 \
                 --port 5000 \
-                --app-name basic-auth \
+               
         
                 --gunicorn-opts "--timeout 120 --workers 1 --threads 4"
 
