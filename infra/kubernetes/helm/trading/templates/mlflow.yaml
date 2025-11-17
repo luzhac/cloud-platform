@@ -173,9 +173,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-secret: "mlflow-basic-auth"
     nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
 
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+
 
 
 spec:
