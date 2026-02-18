@@ -17,7 +17,7 @@ jobs:
 
 
     env:
-      DYNAMODB_TABLE: ${{ secrets.DYNAMODB_TABLE }}
+      DYNAMODB_TABLE: ${{ secrets.DYNAMO_TABLE }}
       S3_BUCKET: ${{ secrets.S3_BUCKET }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
       POETRY_VIRTUALENVS_CREATE: "false"
