@@ -5,6 +5,7 @@ load_dotenv()
 
 AWS_REGION = os.environ["AWS_REGION"]
 S3_BUCKET = os.environ["S3_BUCKET"]
+# modified DYNAMO_TABLE
 DYNAMO_TABLE = os.environ["DYNAMO_TABLE"]
 
  
