@@ -157,7 +157,7 @@ resource "aws_iam_role" "challenge_github_action_role" {
           "Action" : "sts:AssumeRoleWithWebIdentity",
           "Condition" : {
             "StringLike" : {
-              "token.actions.githubusercontent.com:sub" : "repo:luzhac/domain-sres-tech-challenge:*"
+              "token.actions.githubusercontent.com:sub" : "repo:luzhac/cloud-platform:*"
             },
             "StringEquals" : {
               "token.actions.githubusercontent.com:aud" : "sts.amazonaws.com"
