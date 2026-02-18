@@ -17,7 +17,7 @@ app = FastAPI(
 s3_service = S3Service(S3_BUCKET, AWS_REGION)
 dynamo_repo = DynamoRepository(DYNAMO_TABLE, AWS_REGION)
 
-
+#
 @app.get("/")
 def health():
     return {"status": "ok"}
