@@ -55,8 +55,8 @@ Disaster Recovery
 - Automated backup and restore procedures
 
 ## prerequisites
-- Using AWS, create a account with  Paid plan include $100 credict free.
-- For the purpose of this technical challenge only,Create a User:user-admin with AdministratorAccess Policy,In production environments, permissions would follow the principle of least privilege.
+
+- Create a User:user-admin with AdministratorAccess Policy,In production environments, permissions would follow the principle of least privilege.
 - Create AWS access key for CLI.
 - Using aws configure  to use the new account.
 - There is one terraform file,it create  S3 for terraform backend such as for dev env, run bellow local.
