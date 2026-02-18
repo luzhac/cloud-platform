@@ -43,7 +43,7 @@ pyproject.toml
 # 📥 3️⃣ Add Required Dependencies (FastAPI Version)
 
 ```bash
-poetry add fastapi uvicorn boto3 python-multipart
+poetry add fastapi uvicorn boto3 python-multipart pytest
 ```
 
 If you previously had Flask, remove it:
