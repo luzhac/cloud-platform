@@ -38,15 +38,6 @@ Reliability
 
 In a real production system , the following improvements would be implemented:
 
-Python Code:
-- Modify the code to validate input formats and add more test cases.
-
-Application performance
-- Current GET /users performs a full DynamoDB table scan. In production, this would be optimized.
-
-Release Strategy
-- GitOps with Argo CD to deploy  blue/green, canary, rollback
-
 Observability
 - Prometheus for Kubernetes and application metrics
 - Loki for container and application logs
@@ -136,6 +127,8 @@ Includes:
 - Horizontal Pod Autoscaler
 - Health checks
 
+Release Strategy
+- GitOps with Argo CD to deploy  blue/green, canary, rollback
 
 
 ## manul Installation example:
