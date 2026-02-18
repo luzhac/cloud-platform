@@ -22,7 +22,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.ACCOUNT }}:role/${{ secrets.GIT_HUB_ROLE }}
 
-          aws-region: ${{ secrets.REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -56,7 +56,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.ACCOUNT }}:role/${{ secrets.GIT_HUB_ROLE }}
 
-          aws-region: ${{ secrets.REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

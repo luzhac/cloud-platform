@@ -19,7 +19,7 @@ jobs:
     env:
       DYNAMODB_TABLE: ${{ secrets.DYNAMODB_TABLE }}
       S3_BUCKET: ${{ secrets.S3_BUCKET }}
-      AWS_REGION: ${{ secrets.REGION }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
       POETRY_VIRTUALENVS_CREATE: "false"
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.ACCOUNT }}:role/${{ secrets.GIT_HUB_ROLE }}
 
-          aws-region: ${{ secrets.REGION }}
+          aws-region: ${{ secrets.AWS_REGION }}
       
 
       - run:  pip install poetry
