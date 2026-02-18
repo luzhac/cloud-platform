@@ -1,0 +1,78 @@
+name: CD - Build & Push to ECR
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    environment: challenge
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.ACCOUNT }}:role/${{ secrets.GIT_HUB_ROLE }}
+
+          aws-region: ${{ secrets.REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: challenge-repo
+          IMAGE_TAG: $(git rev-parse --short HEAD)
+        run: |
+          echo "Building Docker image..."
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          echo "Pushing to ECR..."
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  terraform-plan:
+    runs-on: ubuntu-latest
+    environment: challenge
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.ACCOUNT }}:role/${{ secrets.GIT_HUB_ROLE }}
+
+          aws-region: ${{ secrets.REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Debug workspace
+        run: |
+          pwd
+          ls -la
+         
+
+
+      - name: Terraform Init
+        working-directory: infra/terraform/environments/${{ secrets.ENVIRONMENT }}
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: infra/terraform/environments/${{ secrets.ENVIRONMENT }}
+        run: terraform plan
+

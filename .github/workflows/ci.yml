@@ -1,0 +1,71 @@
+name: CI Pipeline test/lint/scan
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    environment: challenge
+
+    permissions:
+      id-token: write
+      contents: read
+
+
+    env:
+      DYNAMODB_TABLE: ${{ secrets.DYNAMODB_TABLE }}
+      S3_BUCKET: ${{ secrets.S3_BUCKET }}
+      POETRY_VIRTUALENVS_CREATE: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.ACCOUNT }}:role/${{ secrets.GIT_HUB_ROLE }}
+
+          aws-region: ${{ secrets.REGION }}
+      
+
+      - run:  pip install poetry
+      - run: poetry install --no-interaction --no-ansi --no-root
+      - run: pytest -v --maxfail=1 --disable-warnings
+        continue-on-error: false
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - run: pip install flake8 pylint mypy
+
+      - run: flake8 .
+        continue-on-error: true
+      - run: pylint $(git ls-files '*.py') || true
+        continue-on-error: true
+      - run: mypy .
+        continue-on-error: true
+
+  security-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v3
+      - run: docker build -t challenge:latest .
+      - name: Run Trivy scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "challenge:latest"
+          format: "table"
+          exit-code: "0"
+          severity: "CRITICAL,HIGH"
