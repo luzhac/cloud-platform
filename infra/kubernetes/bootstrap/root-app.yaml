@@ -7,7 +7,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/luzhac/platform-v2
+    repoURL: https://github.com/luzhac/cloud-platform
     targetRevision: main
     path: infra/kubernetes/apps
  

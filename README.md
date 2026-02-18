@@ -1,7 +1,6 @@
 # Solution
-This repository presents an end-to-end DevOps solution for the  Domain SRE technical challenge.
 
-This solution demonstrates the design, development, and deployment of a production-ready Python API service using Docker, Infrastructure as Code (Terraform), Kubernetes (EKS), Helm, and GitHub Actions CI/CD, with a strong focus on reliability, security, and scalability, aligned with a Domain SRE role.
+This solution demonstrates the design, development, and deployment of a production-ready Python API service using Docker, Infrastructure as Code (Terraform), Kubernetes (EKS), Helm, and GitHub Actions CI/CD, ArgoCd with a strong focus on reliability, security, and scalability.
 
 
 The solution is built and tested on Eks nodes(x86_64).Although the implementation currently targets x86 instances for simplicity, it can be easily adapted to ARM-based EC2 instances, which are typically 10% more cost-efficient in production environments.
@@ -111,34 +110,9 @@ Terraform environment(dev):
 After provisioning, a minimal CLI(associate-access-policy) step is required to grant user-admin access to the EKS cluster for kubectl usage.
 
 
-# Kubernetes Deployment with Helm
+# Kubernetes Deployment with ARGOCD
 
-- Custom Helm chart created for the application
-- Supports multi-environment configuration
-
-Includes:
-- Deployment
-- Service
-- Horizontal Pod Autoscaler
-- Health checks
-
-Helm chart location:
-```
-/infra/kubernetes/helm
-```
-
-Installation example:
-```
-helm install challenge ./challenge -n challenge-dev --create-namespace -f challenge/values-dev.yaml
-
-helm upgrade challenge ./challenge  -n challenge-dev -f challenge/values-dev.yaml
-
-```
-
-
-For this task, the service is exposed via an  LoadBalancer for review purposes.
-http://a0ade0d1e29bd471393d367febcdbaac-914726274.eu-west-2.elb.amazonaws.com:5000/swagger
-In a real production environment, this service would  remain internal and be exposed through service.
+ 
 
  
 #  CI Implementation
@@ -151,4 +125,30 @@ A GitHub Actions workflow is implemented to provide a reliable CI/CD pipeline:
  
 #  CD Implementation
 - with ARGOCD
+
+##
+- Custom Helm chart created for the application
+- Supports multi-environment configuration
+
+Includes:
+- Deployment
+- Service
+- Horizontal Pod Autoscaler
+- Health checks
+
+
+
+## manul Installation example:
+Helm chart location:
+```
+/infra/kubernetes/helm
+```
+
+```
+helm install challenge ./challenge -n challenge-dev --create-namespace -f challenge/values-dev.yaml
+
+helm upgrade challenge ./challenge  -n challenge-dev -f challenge/values-dev.yaml
+
+```
+
  
