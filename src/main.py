@@ -22,7 +22,7 @@ dynamo_repo = DynamoRepository(DYNAMO_TABLE, AWS_REGION)
 def health():
     return {"status": "ok"}
 
-
+#
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
     content = await file.read()
