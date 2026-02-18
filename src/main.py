@@ -3,10 +3,10 @@ from fastapi import FastAPI, UploadFile, File
 
 from src.s3_service import S3Service
 from src.dynamo_repository import DynamoRepository
-
-from dotenv import load_dotenv
-
 from src.config import AWS_REGION, S3_BUCKET, DYNAMO_TABLE
+ 
+
+ 
 
 app = FastAPI(
     title="Cloud Storage Platform",
