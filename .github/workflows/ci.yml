@@ -19,6 +19,7 @@ jobs:
     env:
       DYNAMODB_TABLE: ${{ secrets.DYNAMODB_TABLE }}
       S3_BUCKET: ${{ secrets.S3_BUCKET }}
+      AWS_REGION: ${{ secrets.REGION }}
       POETRY_VIRTUALENVS_CREATE: "false"
     steps:
       - uses: actions/checkout@v4
